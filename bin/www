@@ -20,9 +20,9 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
- * Initialize SocketIO
+ * Initialize SocketIO and create namespace
  */
-io = io(server);
+var chat = io(server).of('/chat');
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -30,7 +30,8 @@ io = io(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-io.on('connection', onSocketIOConnection);
+
+chat.on('connection', onSocketIOConnection);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -93,11 +94,14 @@ function onListening() {
  * Event listener for socket.io "connection" event.
  */
 function onSocketIOConnection(socket) {
-	console.log('a user connected');
+	var room = 'chatroom 1';
+
+	socket.join(room);
 
 	socket.on('chat message', function(message) {
 		console.log('message: ' + message);
-		io.emit('chat message', message);
+		console.log('room: ' + room);
+		chat.to(room).emit('chat message', room + ': ' + message);
 	});
 	socket.on('disconnect', function() {
 		console.log('user disconnected');
