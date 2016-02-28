@@ -6,7 +6,6 @@
 	<script src="/javascripts/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
-//		var socket = io();
 		var socket = io.connect('http://localhost:1234/chat');
 
 		$(document).ready(function() {
@@ -31,10 +30,10 @@
 	</script>
 </head>
 <body>
-<h1><%= title %></h1>
-<ul id="messages"></ul>
-<form action="">
-	<input id="m" autocomplete="off" /><button>Send</button>
-</form>
+	<h1><%= title %></h1>
+	<ul id="messages"></ul>
+	<form action="">
+		<input id="m" autocomplete="off" /><button>Send</button>
+	</form>
 </body>
 </html>
