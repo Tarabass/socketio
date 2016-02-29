@@ -111,11 +111,13 @@ router.get('/:room', function(req, res, next) {
  * Event listener for socket.io "connection" event.
  */
 function onSocketIOConnection(socket) {
+	var room = currentRoom;
+
 	// Join current room
-	socket.join(currentRoom);
+	socket.join(room);
 
 	socket.on('chat message', function(data) {
-		currentNameSpace.to(currentRoom).emit('chat message', {
+		currentNameSpace.to(room).emit('chat message', {
 			message: data.message,
 			username: data.username
 		});
