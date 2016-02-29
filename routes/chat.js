@@ -114,9 +114,13 @@ function onSocketIOConnection(socket) {
 	// Join current room
 	socket.join(currentRoom);
 
-	socket.on('chat message', function(message) {
-		currentNameSpace.to(currentRoom).emit('chat message', currentRoom + ': ' + message);
+	socket.on('chat message', function(data) {
+		currentNameSpace.to(currentRoom).emit('chat message', {
+			message: data.message,
+			username: data.username
+		});
 	});
+
 	socket.on('disconnect', function() {
 		console.log('user disconnected');
 	});
