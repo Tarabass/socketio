@@ -6,6 +6,7 @@
 }
 
 body {
+    position: relative;
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -33,6 +34,15 @@ form button {
     width: 10%;
     background: rgb(130, 224, 255);
     padding: 10px;
+}
+
+#typingmessage {
+    height: 30px;
+    margin: 0 auto;
+    display: none;
+    position: absolute;
+    top: 0;
+    background-color: yellow;
 }
 
 #messages {

@@ -123,7 +123,22 @@ function onSocketIOConnection(socket) {
 		});
 	});
 
-	socket.on('disconnect', function() {
+	// when the client emits 'typing', we broadcast it to others
+	socket.on('typing', function () {
+		socket.broadcast.emit('typing', {
+			username: 'Tarabass'//socket.username
+		});
+	});
+
+	// when the client emits 'stop typing', we broadcast it to others
+	socket.on('stop typing', function () {
+		socket.broadcast.emit('stop typing', {
+			username: 'Tarabass'//socket.username
+		});
+	});
+
+
+socket.on('disconnect', function() {
 		console.log('user disconnected');
 	});
 }
