@@ -121,7 +121,8 @@ function onSocketIOConnection(socket) {
 	socket.on('chat message', function(data) {
 		currentNameSpace.to(room).emit('chat message', {
 			message: data.message,
-			username: data.username
+			username: data.username,
+			senderId: this.client.id
 		});
 	});
 
