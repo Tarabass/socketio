@@ -109,6 +109,8 @@ router.get('/:room', function(req, res, next) {
 
 /**
  * Event listener for socket.io "connection" event.
+ *
+ * http://stackoverflow.com/a/10099325/408487
  */
 function onSocketIOConnection(socket) {
 	var room = currentRoom;
@@ -125,20 +127,21 @@ function onSocketIOConnection(socket) {
 
 	// when the client emits 'typing', we broadcast it to others
 	socket.on('typing', function () {
-		socket.broadcast.emit('typing', {
+		// We emit to the room using the socket to emit only to 'other sockets'
+		socket.to(room).emit('typing', {
 			username: 'Tarabass'//socket.username
 		});
 	});
 
 	// when the client emits 'stop typing', we broadcast it to others
 	socket.on('stop typing', function () {
-		socket.broadcast.emit('stop typing', {
+		// We emit to the room using the namespace to emit to 'all sockets'
+		currentNameSpace.to(room).emit('stop typing', {
 			username: 'Tarabass'//socket.username
 		});
 	});
 
-
-socket.on('disconnect', function() {
+	socket.on('disconnect', function() {
 		console.log('user disconnected');
 	});
 }
