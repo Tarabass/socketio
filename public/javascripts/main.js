@@ -70,11 +70,15 @@ $(document).ready(function() {
 	});
 
 	socket.on('chat message', function(data) {
-		var $message = $('<li>').text(data.username + ': ' + data.message);
+		var $message = $('<li/>'),
+			$bubble = $('<div class="bubble"/>'),
+			$bubbleContent = $('<div class="bubbleContent"/>');
 
-		if(data.senderId === this.id) {
-			$message.css('text-align', 'right');
-		}
+		$bubbleContent.html(data.username + '<hr>' + data.message);
+		$bubble.append($bubbleContent);
+		$message.append($bubble);
+
+		$message.addClass(data.senderId === this.id ? 'right' : 'left');
 
 		$('#messages').append($message);
 	});
