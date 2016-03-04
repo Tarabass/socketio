@@ -57,6 +57,11 @@ $(document).ready(function() {
 		//}
 	}
 
+	function scrollToBottom() {
+		//$(".messages").prop({ scrollTop: $(".messages").prop("scrollHeight") });
+		$('.messages').scrollTop($('.messages').prop("scrollHeight"));
+	}
+
 	// Whenever the server emits 'typing', show the typing message
 	socket.on('typing', function (data) {
 		$('#typingmessage').fadeIn(function() {
@@ -81,6 +86,8 @@ $(document).ready(function() {
 		$message.addClass(data.senderId === this.id ? 'right' : 'left');
 
 		$('#messages').append($message);
+
+		scrollToBottom();
 	});
 
 	socket.on('user joined', function(data) {
@@ -89,6 +96,8 @@ $(document).ready(function() {
 		$message.text(data.username + ' ' + data.message);
 
 		$('#messages').append($message);
+
+		scrollToBottom();
 	});
 
 	socket.on('connect', function () {
