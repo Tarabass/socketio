@@ -102,6 +102,14 @@ form button {
     padding: 5px 10px;
 }
 
+.chatbox .chatbox-inner .messages ul li.user-joined {
+    text-align: center;
+    background-color: rgb(240, 248, 255);
+    width: 50%;
+    margin: 10px auto;
+    border-radius: 6px;
+}
+
 /*#messages li:nth-child(odd) {
     background: #eee;
 }*/

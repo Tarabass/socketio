@@ -83,9 +83,16 @@ $(document).ready(function() {
 		$('#messages').append($message);
 	});
 
+	socket.on('user joined', function(data) {
+		var $message = $('<li class="user-joined"/>');
+
+		$message.text(data.username + ' ' + data.message);
+
+		$('#messages').append($message);
+	});
+
 	socket.on('connect', function () {
-		socket.emit('chat message', {
-			message: 'User joined the room!',
+		socket.emit('user joined', {
 			username: 'Tarabass'
 		});
 	});

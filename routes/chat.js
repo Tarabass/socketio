@@ -126,6 +126,14 @@ function onSocketIOConnection(socket) {
 		});
 	});
 
+	socket.on('user joined', function(data) {
+		socket.to(room).emit('user joined', {
+			username: data.username,
+			message: 'joined',
+			senderId: this.client.id
+		});
+	});
+
 	// when the client emits 'typing', we broadcast it to others
 	socket.on('typing', function () {
 		// We emit to the room using the socket to emit only to 'other sockets'
