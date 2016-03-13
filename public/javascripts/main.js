@@ -8,7 +8,7 @@
  *
  * Copyright (c) 2016 Strictly Internet
  */
-var socket = io.connect('http://localhost:1234/chat');
+var socket = io.connect('http://127.0.0.1:1234/chat');
 
 var TYPING_TIMER_LENGTH = 400; // ms
 var typing = false;
@@ -93,11 +93,19 @@ $(document).ready(function() {
 	socket.on('user joined', function(data) {
 		var $message = $('<li class="user-joined"/>');
 
-		$message.text(data.username + ' ' + data.message);
+		$message.text(data.userName + ' ' + data.message);
 
 		$('#messages').append($message);
 
 		scrollToBottom();
+
+		for (var i = 0; i < data.connected.length; i++) {
+			//console.log('client: %s', clientId); //Seeing is believing
+			//var client_socket =  nameSpace.in(room).connected[clientId];//Do whatever you want with this
+			//console.log(client_socket);
+			var client = data.connected[i];
+			$('#users').append($('<li/>').prop({ id: client.id }).text(client.userName));
+		}
 	});
 
 	socket.on('connect', function () {

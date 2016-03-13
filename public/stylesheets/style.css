@@ -41,9 +41,17 @@ form button {
     background-color: transparent;
 }
 
+.users {
+    height: 500px;
+    width: 250px;
+    float: left;
+    overflow: auto;
+    border: 1px solid green;
+}
 .room {
     height: 500px;
     width: 500px;
+    float: left;
 }
 
 .chatbox {
