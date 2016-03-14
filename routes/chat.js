@@ -132,20 +132,7 @@ function onSocketIOConnection(socket) {
 	});
 
 	socket.on('user joined', function(data) {
-		var sockets = [];
-
-		nameSpace.in(room).clients(function(error, clients){
-			if (error) throw error;
-
-			for (var i = 0, y = clients.lenght; i < y; i++) {
-				var client =  nameSpace.in(room).connected[clients[i]];
-
-				sockets.push({
-					id: client.id,
-					userName: client.userName
-				});
-			}
-
+		getAllClients(nameSpace, room, function(sockets) {
 			socket.to(room).emit('user joined', {
 				userName: socket.userName,
 				message: 'joined',
@@ -200,6 +187,30 @@ function onSocketIOConnection(socket) {
 	socket.on('error', function(error) {
 		console.log(error);
 	});
+}
+
+function getAllClients(nameSpace, room, callback) {
+	if(typeof callback === 'function') {
+		var connectedSockets = [];
+
+		nameSpace.in(room).clients(function(error, clients){
+			if (error) throw error;
+
+			for (var i = 0, y = clients.length; i < y; i++) {
+				var connectedSocket =  nameSpace.in(room).connected[clients[i]];
+
+				connectedSockets.push({
+					id: connectedSocket.id,
+					userName: connectedSocket.userName
+				});
+			}
+
+			callback(connectedSockets);
+		});
+	}
+	else {
+		throw new Error('No callback function provided');
+	}
 }
 
 module.exports = router;

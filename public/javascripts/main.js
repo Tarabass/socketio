@@ -62,6 +62,20 @@ $(document).ready(function() {
 		$('.messages').scrollTop($('.messages').prop("scrollHeight"));
 	}
 
+	function listAllUsers(users) {
+		for (var i = 0, y = users.length; i < y; i++) {
+			var client = users[i];
+
+			var usersInList = $('#users li').map(function() {
+				return this.innerText;
+			}).get();
+
+			if (!~usersInList.indexOf(client.userName)) {
+				$('#users').append($('<li/>').prop({ id: client.id }).css('color', client.connected ? 'green' : 'red').text(client.userName));
+			}
+		}
+	}
+
 	// Whenever the server emits 'typing', show the typing message
 	socket.on('typing', function (data) {
 		$('#typingmessage').fadeIn(function() {
@@ -99,13 +113,7 @@ $(document).ready(function() {
 
 		scrollToBottom();
 
-		for (var i = 0; i < data.connected.length; i++) {
-			//console.log('client: %s', clientId); //Seeing is believing
-			//var client_socket =  nameSpace.in(room).connected[clientId];//Do whatever you want with this
-			//console.log(client_socket);
-			var client = data.connected[i];
-			$('#users').append($('<li/>').prop({ id: client.id }).text(client.userName));
-		}
+		listAllUsers(data.connected);
 	});
 
 	socket.on('connect', function () {
