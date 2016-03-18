@@ -84,7 +84,7 @@ var controller = function() {
 
 		socket.userName = 'My Username';
 
-		console.log(nameSpace.server.engine.clientsCount);
+		//console.log(nameSpace.server.engine.clientsCount);
 
 		socket.on('chat message', function(data) {
 			nameSpace.to(room).emit('chat message', {
